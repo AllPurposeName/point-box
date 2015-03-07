@@ -2,10 +2,10 @@
 
 one:
   name: MyText
-  role_id: 
+  role: 1
   password_digest: MyText
 
 two:
   name: MyText
-  role_id: 
+  role: 1
   password_digest: MyText

@@ -11,9 +11,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20150306013624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "points", force: :cascade do |t|
+    t.integer  "value"
+    t.boolean  "status"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "points", ["user_id"], name: "index_points_on_user_id", using: :btree
+
+  create_table "rewards", force: :cascade do |t|
+    t.text     "name"
+    t.integer  "cost"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_rewards", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "reward_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_rewards", ["reward_id"], name: "index_user_rewards_on_reward_id", using: :btree
+  add_index "user_rewards", ["user_id"], name: "index_user_rewards_on_user_id", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.text     "name"
+    t.integer  "role"
+    t.text     "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_foreign_key "points", "users"
+  add_foreign_key "user_rewards", "rewards"
+  add_foreign_key "user_rewards", "users"
 end
