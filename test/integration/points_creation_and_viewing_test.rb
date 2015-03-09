@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'Mocha'
+
 class PointsCreationAndViewingTest < ActionController::TestCase
   include Capybara::DSL
   attr_reader:user
