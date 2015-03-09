@@ -5,8 +5,8 @@ class Ability
     user ||= User.new
     reward = Reward.new
     can :read, User, id: user.id
-    # can :create, Reward
     can :read, Reward
+    # can :create, Reward
     if user.admin?
       can :manage, :all
     end

@@ -1,5 +1,4 @@
 class UserRewardsController < ApplicationController
-  before_action :set_reward, only: [:show, :edit, :update, :destroy]
 
   def create
     # authorize! :create, @reward

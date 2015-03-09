@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @user
     @spent_points = User.find(params[:id]).points.where(status: true).count
     @unspent_points = User.find(params[:id]).points.where(status: false).count
-    @rewards = User.find_by(params[:name]).rewards
+    @rewards = User.find(params[:id]).rewards
     authorize! :read, @user
     render :show
   end
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
     authorize! :update, @user
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to user_path(@user), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }

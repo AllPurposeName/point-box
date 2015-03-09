@@ -7,7 +7,7 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
   # Add more helper methods to be used by all tests here...
-  
+
   def login_user
     visit "/login"
     fill_in "session[name]", with: "DJ"
@@ -20,5 +20,13 @@ class ActiveSupport::TestCase
     fill_in "session[name]", with: "Kaitryn"
     fill_in "session[password]", with: "pw"
     click_link_or_button("Login")
+  end
+
+  def logout
+    visit "/login"
+    fill_in "session[name]", with: "Kaitryn"
+    fill_in "session[password]", with: "pw"
+    click_link_or_button("Login")
+    click_link_or_button("Sign out")
   end
 end

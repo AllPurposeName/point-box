@@ -4,4 +4,5 @@
 
 <%= link_to 'Show', @user %> |
 <%= link_to 'Back', users_path %>
-<%= link_to 'Add a Point', points_path(id: @user.id), method: :create %>
+<%= link_to 'Add a Point', points_path(id: @user.id), method: :post %>
+<%= link_to 'Destroy a Point', points_path(id: @user.id), method: :delete %>

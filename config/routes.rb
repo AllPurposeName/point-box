@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   delete '/logout', to: "sessions#destroy"
   post '/user_rewards', to: "user_rewards#create"
   post '/points', to: "points#create"
+  delete '/points', to: "points#destroy"
 end

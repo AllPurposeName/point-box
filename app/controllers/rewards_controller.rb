@@ -3,13 +3,14 @@ class RewardsController < ApplicationController
   before_action :set_reward, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize! :read, Reward
     @users = User.all
     @rewards = Reward.all
   end
 
   def show
+    authorize! :read, @reward
     @rewards = User.find_by(params[:username]).rewards
-    @user = User.find(params[:id])
   end
 
   def new
@@ -42,6 +43,7 @@ class RewardsController < ApplicationController
 
   def destroy
     authorize! :delete, @reward
+    @reward.user_rewards.destroy_all
     @reward.destroy
     redirect_to rewards_path
   end

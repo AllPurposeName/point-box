@@ -2,7 +2,6 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   test "user cannot be created with out all fields valid" do
-    skip
     user1 = User.new(name: "Derek")
     refute user1.save
 
@@ -11,7 +10,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "no two users can have the same name" do
-    skip
     user1 = User.new(name: "Derek", password_digest: "pw")
     user2 = User.new(name: "Derek", password_digest: "pw1")
 
