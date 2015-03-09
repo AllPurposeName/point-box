@@ -1,0 +1,21 @@
+<h2 id="rewards">All Rewards</h2>
+<ul>
+
+<% @rewards.each do |reward| %>
+  <li id="<%=reward.name.downcase%>"> <%= link_to "#{reward.name}", reward_path(reward) %> <%= "worth #{reward.cost} point(s)"  %> | <%= link_to "Purchase", user_rewards_path(reward: reward, reward_id: reward.id), method: :post %></li>
+  <% end %>
+</ul>
+
+<% @users.each do |user| %>
+<p>
+    <% user.rewards.each do |reward| %>
+    <li>
+    <%= "#{user.name} has a #{reward.name}" %></li>
+    <% end %>
+  <% end %>
+</p>
+</ul>
+
+<%= link_to 'Back to All Users', users_path %>
+<%= link_to "Create Reward", new_reward_path %>
+<%= link_to "Log out", logout_path, method: :delete %>

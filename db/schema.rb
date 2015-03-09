@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(version: 20150306013624) do
   enable_extension "plpgsql"
 
   create_table "points", force: :cascade do |t|
-    t.integer  "value"
-    t.boolean  "status"
+    t.integer  "value",      default: 1
+    t.boolean  "status",     default: false
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "points", ["user_id"], name: "index_points_on_user_id", using: :btree
@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(version: 20150306013624) do
 
   create_table "users", force: :cascade do |t|
     t.text     "name"
-    t.integer  "role"
+    t.integer  "role",            default: 0
     t.text     "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_foreign_key "points", "users"

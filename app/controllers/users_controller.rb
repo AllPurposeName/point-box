@@ -1,29 +1,40 @@
 class UsersController < ApplicationController
+  before_filter :logged_in?
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+    authorize! :read, @users
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    @user
+    @spent_points = User.find(params[:id]).points.where(status: true).count
+    @unspent_points = User.find(params[:id]).points.where(status: false).count
+    @rewards = User.find_by(params[:name]).rewards
+    authorize! :read, @user
+    render :show
   end
 
   # GET /users/new
   def new
     @user = User.new
+    authorize! :create, @user
   end
 
   # GET /users/1/edit
   def edit
+    authorize! :update, @user
   end
 
   # POST /users
   # POST /users.json
   def create
+    authorize! :create, @user
     @user = User.new(user_params)
 
     respond_to do |format|
@@ -40,6 +51,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    authorize! :update, @user
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -54,6 +66,8 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    authorize! :delete, @user
+    @user.points.destroy
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
@@ -65,6 +79,12 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def logged_in?
+      if current_user.nil?
+        redirect_to login_path, alert: "Not authorized"
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

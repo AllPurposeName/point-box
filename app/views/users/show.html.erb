@@ -6,14 +6,22 @@
 </p>
 
 <p>
-  <strong>Role:</strong>
-  <%= @user.role %>
+  <strong>Points:</strong>
+
+  <%= "You have #{@unspent_points} points left to spend." %>
+  <%= "You have already spent #{@spent_points} points." %>
+
 </p>
 
 <p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
+    <strong>Rewards:</strong>
 </p>
+<% @rewards.each do |reward| %>
+  <li id="<%=reward.name.downcase%>"> <%= link_to "#{reward.name}", reward_path(reward) %> <%= "worth #{reward.cost} point(s)"  %> | <%= link_to "Purchase", user_rewards_path(reward: reward, reward_id: reward.id), method: :post %></li>
+  <% end %>
+</ul>
 
+<%= link_to "Sign out", logout_path, method: :delete %> |
+<%= link_to 'All Rewards', rewards_path %> |
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back to All Users', users_path %>
